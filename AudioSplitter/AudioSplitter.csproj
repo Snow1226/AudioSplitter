@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BAA4A93D-115D-471A-8F1F-E9596715D958}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AudioSplitter</RootNamespace>
+    <AssemblyName>AudioSplitter</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <LocalRefsDir Condition="Exists('..\Refs')">..\Refs</LocalRefsDir>
+    <BeatSaberDir>$(LocalRefsDir)</BeatSaberDir>
+    <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
+    <!--<PathMap>$(AppOutputBase)=X:\$(AssemblyName)\</PathMap>-->
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(DefineConstants.Contains('CIBuild')) OR '$(NCrunch)' == '1'">
+    <DisableCopyToPlugins>True</DisableCopyToPlugins>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(NCrunch)' == '1'">
+    <DisableCopyToPlugins>True</DisableCopyToPlugins>
+    <DisableZipRelease>True</DisableZipRelease>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(BeatSaberDir)\Libs\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BSML">
+      <HintPath>$(BeatSaberDir)\Plugins\BSML.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Main">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Main.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HMLib">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HMUI">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\HMUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="IPA.Loader">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\IPA.Loader.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.VRModule">
+      <HintPath>$(BeatSaberDir)\Beat Saber_Data\Managed\UnityEngine.VRModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AudioConnector.cs" />
+    <Compile Include="AudioSplitterController.cs" />
+    <Compile Include="HarmonyPatches\AudioListenerPatch.cs" />
+    <Compile Include="NAudio\NAudio.Asio\Asio64Bit.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioAudioAvailableEventArgs.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioCallbacks.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioChannelInfo.cs" />
+    <Compile Include="NAudio\NAudio.Asio\ASIODriver.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioDriverCapability.cs" />
+    <Compile Include="NAudio\NAudio.Asio\ASIODriverExt.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioError.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioMessageSelector.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioOut.cs" />
+    <Compile Include="NAudio\NAudio.Asio\ASIOSampleConvertor.cs" />
+    <Compile Include="NAudio\NAudio.Asio\AsioSampleType.cs" />
+    <Compile Include="NAudio\NAudio.Asio\ASIOStructures.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\BufferHelpers.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\ByteArrayExtensions.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\ByteEncoding.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\ChunkIdentifier.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\CircularBuffer.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\Decibels.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\FieldDescriptionAttribute.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\FieldDescriptionHelper.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\HResult.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\IEEE.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\IgnoreDisposeStream.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\NativeMethods.cs" />
+    <Compile Include="NAudio\NAudio.Core\Utils\WavePositionExtensions.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\ConcatenatingSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\FadeInOutSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\MeteringSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\MixingSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\MonoToStereoSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\MultiplexingSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\NotifyingSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\OffsetSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\PanningSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\Pcm16BitToSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\Pcm24BitToSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\Pcm32BitToSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\Pcm8BitToSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SampleChannel.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SampleProviderConverterBase.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SampleProviderConverters.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SampleToWaveProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SampleToWaveProvider16.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SampleToWaveProvider24.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\SignalGenerator.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\StereoToMonoSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\VolumeSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\WaveToSampleProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\SampleProviders\WaveToSampleProvider64.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\AdpcmWaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\AudioMediaSubtypes.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\Gsm610WaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\ImaAdpcmWaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\Mp3WaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\OggWaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\TrueSpeechWaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\WaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\WaveFormatCustomMarshaler.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\WaveFormatEncoding.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\WaveFormatExtensible.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\WaveFormatExtraData.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveFormats\WmaWaveFormat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\AiffFileWriter.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\BextChunkInfo.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\BwfWriter.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\DirectSoundOut.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\IWaveBuffer.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\IWavePlayer.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\IWaveProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\IWaveProviderFloat.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\PlaybackState.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\StoppedEventArgs.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\WaveBuffer.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveOutputs\WaveFileWriter.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\BufferedWaveProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\MixingWaveProvider32.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\MonoToStereoProvider16.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\MultiplexingWaveProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\SilenceWaveProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\StereoToMonoProvider16.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\VolumeWaveProvider16.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\Wave16toFloatProvider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\WaveFloatTo16Provider.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\WaveProvider16.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\WaveProvider32.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveProviders\WaveRecorder.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\AiffFileReader.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\BlockAlignReductionStream.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\ISampleNotifier.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\RawSourceWaveStream.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\RiffChunk.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\Wave32To16Stream.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\WaveMixerStream32.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\WaveOffsetStream.cs" />
+    <Compile Include="NAudio\NAudio.Core\Wave\WaveStreams\WaveStream.cs" />
+    <Compile Include="Plugin.cs" />
+    <Compile Include="Configuration\PluginConfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\AudioSplitterUI.cs" />
+    <Compile Include="UI\ModMainFlowCoordinator.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="manifest.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')" />
+    <None Include="AudioSplitter.csproj.user" Condition="Exists('AudioSplitter.csproj.user')" />
+    <EmbeddedResource Include="UI\AudioSplitterUI.bsml" />
+    <None Include="ILRepack.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BeatSaberModdingTools.Tasks">
+      <Version>2.0.0-beta1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
