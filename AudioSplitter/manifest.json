@@ -3,10 +3,11 @@
   "id": "AudioSplitter",
   "name": "AudioSplitter",
   "author": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
-  "gameVersion": "1.18.3",
+  "gameVersion": "1.24.1",
   "dependsOn": {
-    "BSIPA": "^4.2.0"
+    "BSIPA": "^4.2.2",
+    "BeatSaberMarkupLanguage": "^1.6.8"
   }
 }

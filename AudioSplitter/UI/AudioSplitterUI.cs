@@ -14,7 +14,9 @@ namespace AudioSplitter.UI
 {
     internal class AudioSplitterUI : BSMLAutomaticViewController
     {
+        private string[] _channelList = new string[32];
         private List<string> _asioDeviceList = new List<string>();
+        private List<string> _asioChannelList = new List<string>();
         public ModMainFlowCoordinator mainFlowCoordinator { get; set; }
         public void SetMainFlowCoordinator(ModMainFlowCoordinator mainFlowCoordinator)
         {
@@ -24,6 +26,7 @@ namespace AudioSplitter.UI
         {
             base.DidActivate(firstActivation, addedToHierarchy, screenSystemEnabling);
             InitializeList();
+            InitializeChannelList();
         }
         protected override void DidDeactivate(bool removedFromHierarchy, bool screenSystemDisabling)
         {
@@ -37,13 +40,13 @@ namespace AudioSplitter.UI
             PluginConfig.Instance.AudioDevice = _asioDeviceList[row];
             Plugin.Instance._controller.RestartASIO();
         }
-        [UIValue("ChannelOffset")]
-        private int channelOffset = PluginConfig.Instance.OutputChannel;
-        [UIAction("OnChannelOffsetChange")]
-        private void OnChannelOffsetChange(int value)
+
+        [UIComponent("ChannelList")]
+        public CustomListTableData channelList = null;
+        [UIAction("select-channelcell")]
+        private void ChannelSelect (TableView table, int row)
         {
-            channelOffset = value;
-            PluginConfig.Instance.OutputChannel = channelOffset;
+            PluginConfig.Instance.OutputChannel = row * 2;
             Plugin.Instance._controller.RestartASIO();
         }
 
@@ -54,11 +57,7 @@ namespace AudioSplitter.UI
         {
             PluginConfig.Instance.DefaultDeviceOutput = defaultOutput = value;
         }
-        [UIAction("OnBufferReset")]
-        private void OnBufferReset()
-        {
-            Plugin.Instance._controller.asioBuffer.ClearBuffer();
-        }
+
         private void InitializeList()
         {
             deviceList.tableView.ClearSelection();
@@ -81,6 +80,23 @@ namespace AudioSplitter.UI
                     break;
                 }
             }
+        }
+        private void InitializeChannelList()
+        {
+            channelList.tableView.ClearSelection();
+            channelList.data.Clear();
+            _asioChannelList.Clear();
+
+            Plugin.Log?.Debug($"ASIO OutputChannel {Plugin.Instance._controller.asioOut.DriverOutputChannelCount}");
+            for (int i=0;i< Plugin.Instance._controller.asioOut.DriverOutputChannelCount; i += 2)
+            {
+                string name = $"Channel {i+1}/{i+2}";
+                var data1 = new CustomListTableData.CustomCellInfo(name);
+                channelList.data.Add(data1);
+                _asioChannelList.Add(name);
+            }
+            channelList.tableView.ReloadData();
+            channelList.tableView.SelectCellWithIdx((int)(PluginConfig.Instance.OutputChannel/ 2));
         }
     }
 }
