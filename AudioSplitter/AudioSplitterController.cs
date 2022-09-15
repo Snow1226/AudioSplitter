@@ -22,6 +22,9 @@ namespace AudioSplitter
         private ModMainFlowCoordinator mainFlowCoordinator;
         public AsioOut asioOut = null;
         public BufferedWaveProvider asioBuffer = null;
+
+        public int gameAudioSampleRate = 48000;
+
         private void Awake()
         {
             if (Instance != null)
@@ -40,8 +43,11 @@ namespace AudioSplitter
 
         public void Start()
         {
+
             if (PluginConfig.Instance.AudioDevice != null && PluginConfig.Instance.AudioDevice != String.Empty)
             {
+                gameAudioSampleRate = AudioSettings.outputSampleRate;
+                Plugin.Log?.Notice($"InGame SamplingRate : {gameAudioSampleRate}");
 
                 try
                 {

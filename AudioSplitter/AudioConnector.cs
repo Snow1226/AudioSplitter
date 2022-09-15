@@ -13,6 +13,9 @@ namespace AudioSplitter
     internal class AudioConnector : MonoBehaviour
     {
         internal string _objectPath = String.Empty;
+        private Int16[] intData;
+        private byte[] byteData;
+        private byte[] byteArr =new byte[2];
 
         private void Start()
         {
@@ -29,17 +32,23 @@ namespace AudioSplitter
         {
             try
             {
-                Int16[] intData = new Int16[data.Length];
-                var byteData = new byte[data.Length * 2];
+                if(intData == null || intData.Length!= data.Length)
+                    intData = new Int16[data.Length];
+
+                if (byteData == null || byteData.Length != data.Length*2)
+                    byteData = new byte[data.Length * 2];
+
                 int rescaleFactor = 32767;
                 for (int i = 0; i < data.Length; i++)
                 {
                     intData[i] = (short)(data[i] * rescaleFactor);
-                    var byteArr = new byte[2];
+                    
                     byteArr = BitConverter.GetBytes(intData[i]);
                     byteArr.CopyTo(byteData, i * 2);
                 }
                 Plugin.Instance._controller.asioBuffer?.AddSamples(byteData, 0, byteData.Length);
+
+                //DefaultDeviceOutput
                 if (!PluginConfig.Instance.DefaultDeviceOutput)
                 {
                     for (int i = 0; i < data.Length; i++)
