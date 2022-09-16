@@ -39,6 +39,7 @@ namespace AudioSplitter.UI
         {
             PluginConfig.Instance.AudioDevice = _asioDeviceList[row];
             Plugin.Instance._controller.RestartASIO();
+            InitializeChannelList();
         }
 
         [UIComponent("ChannelList")]
@@ -87,8 +88,8 @@ namespace AudioSplitter.UI
             channelList.data.Clear();
             _asioChannelList.Clear();
 
-            Plugin.Log?.Debug($"ASIO OutputChannel {Plugin.Instance._controller.asioOut.DriverOutputChannelCount}");
-            for (int i=0;i< Plugin.Instance._controller.asioOut.DriverOutputChannelCount; i += 2)
+            Plugin.Log?.Debug($"ASIO OutputChannel {Plugin.Instance._controller.asioOut?.DriverOutputChannelCount}");
+            for (int i=0;i< Plugin.Instance._controller.asioOut?.DriverOutputChannelCount; i += 2)
             {
                 string name = $"Channel {i+1}/{i+2}";
                 var data1 = new CustomListTableData.CustomCellInfo(name);
@@ -96,7 +97,8 @@ namespace AudioSplitter.UI
                 _asioChannelList.Add(name);
             }
             channelList.tableView.ReloadData();
-            channelList.tableView.SelectCellWithIdx((int)(PluginConfig.Instance.OutputChannel/ 2));
+            if(Plugin.Instance._controller.asioOut?.DriverOutputChannelCount>=2)
+                channelList.tableView.SelectCellWithIdx((int)(PluginConfig.Instance.OutputChannel/ 2));
         }
     }
 }

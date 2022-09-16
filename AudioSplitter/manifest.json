@@ -3,7 +3,7 @@
   "id": "AudioSplitter",
   "name": "AudioSplitter",
   "author": "",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "gameVersion": "1.24.1",
   "dependsOn": {

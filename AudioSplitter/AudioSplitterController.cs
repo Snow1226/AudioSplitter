@@ -55,7 +55,10 @@ namespace AudioSplitter
                     asioBuffer.DiscardOnBufferOverflow = true;
 
                     if (PluginConfig.Instance.AudioDevice == string.Empty)
+                    {
                         asioOut = new AsioOut(AsioOut.GetDriverNames()[0]);
+                        PluginConfig.Instance.AudioDevice = AsioOut.GetDriverNames()[0];
+                    }
                     else
                         asioOut = new AsioOut(PluginConfig.Instance.AudioDevice);
                     asioOut.ChannelOffset = PluginConfig.Instance.OutputChannel;
