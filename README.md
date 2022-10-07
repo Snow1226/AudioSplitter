@@ -6,7 +6,7 @@ Since WASAPI cannot run on Unity, there are no plans to support it.
 XAudio2 is under consideration.  
 
 # Supported game versions
-BeatSaber 1.24.1  
+BeatSaber 1.24.1 - 1.25.0
 
 # Requirements  
 BSIPA 4.2.2  
