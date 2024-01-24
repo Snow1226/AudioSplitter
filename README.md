@@ -9,8 +9,8 @@ XAudio2 is under consideration.
 BeatSaber 1.34.2  
 
 # Requirements  
-BSIPA 4.3.0  
-BSML (BeatSaberMarkupLanguage) 1.7.2  
+BSIPA 4.3.2  
+BSML (BeatSaberMarkupLanguage) 1.8.1   
 
 # Latest version Download
 The latest version can be downloaded from the following.  

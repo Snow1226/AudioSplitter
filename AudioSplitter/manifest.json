@@ -2,12 +2,12 @@
   "$schema": "https://raw.githubusercontent.com/bsmg/BSIPA-MetadataFileSchema/master/Schema.json",
   "id": "AudioSplitter",
   "name": "AudioSplitter",
-  "author": "",
+  "author": "Snow1226",
   "version": "1.0.0",
-  "description": "",
+  "description": "A mod that streams BeatSaber sounds to another device/channel as well.",
   "gameVersion": "1.34.2",
   "dependsOn": {
-    "BSIPA": "^4.3.0",
-    "BeatSaberMarkupLanguage": "^1.7.2"
+    "BSIPA": "^4.3.2",
+    "BeatSaberMarkupLanguage": "^1.8.1"
   }
 }
