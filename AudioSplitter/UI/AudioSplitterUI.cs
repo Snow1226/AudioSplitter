@@ -61,31 +61,31 @@ namespace AudioSplitter.UI
 
         private void InitializeList()
         {
-            deviceList.tableView.ClearSelection();
-            deviceList.data.Clear();
+            deviceList.TableView.ClearSelection();
+            deviceList.Data.Clear();
 
             _asioDeviceList.Clear();
 
             foreach (string name in AsioOut.GetDriverNames())
             {
                 var data1 = new CustomListTableData.CustomCellInfo(name);
-                deviceList.data.Add(data1);
+                deviceList.Data.Add(data1);
                 _asioDeviceList.Add(name);
             }
-            deviceList.tableView.ReloadData();
+            deviceList.TableView.ReloadData();
             for(int i = 0; i < _asioDeviceList.Count; i++)
             {
                 if(_asioDeviceList[i] == PluginConfig.Instance.AudioDevice)
                 {
-                    deviceList.tableView.SelectCellWithIdx(i);
+                    deviceList.TableView.SelectCellWithIdx(i);
                     break;
                 }
             }
         }
         private void InitializeChannelList()
         {
-            channelList.tableView.ClearSelection();
-            channelList.data.Clear();
+            channelList.TableView.ClearSelection();
+            channelList.Data.Clear();
             _asioChannelList.Clear();
 
             Plugin.Log?.Debug($"ASIO OutputChannel {Plugin.Instance._controller.asioOut?.DriverOutputChannelCount}");
@@ -93,12 +93,12 @@ namespace AudioSplitter.UI
             {
                 string name = $"Channel {i+1}/{i+2}";
                 var data1 = new CustomListTableData.CustomCellInfo(name);
-                channelList.data.Add(data1);
+                channelList.Data.Add(data1);
                 _asioChannelList.Add(name);
             }
-            channelList.tableView.ReloadData();
+            channelList.TableView.ReloadData();
             if(Plugin.Instance._controller.asioOut?.DriverOutputChannelCount>=2)
-                channelList.tableView.SelectCellWithIdx((int)(PluginConfig.Instance.OutputChannel/ 2));
+                channelList.TableView.SelectCellWithIdx((int)(PluginConfig.Instance.OutputChannel/ 2));
         }
     }
 }

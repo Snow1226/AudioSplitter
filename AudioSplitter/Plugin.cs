@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using AudioSplitter.UI;
+using HarmonyLib;
 using IPA;
 using IPA.Config;
 using IPA.Config.Stores;
@@ -39,6 +40,12 @@ namespace AudioSplitter
             Log.Debug("OnApplicationStart");
             _controller = new GameObject("AudioSplitterController").AddComponent<AudioSplitterController>();
 
+            BeatSaberMarkupLanguage.Util.MainMenuAwaiter.MainMenuInitializing += MenuInit;
+        }
+
+        public void MenuInit()
+        {
+            UIManager.Init();
         }
 
         [OnExit]

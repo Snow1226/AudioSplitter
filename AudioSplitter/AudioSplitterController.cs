@@ -9,8 +9,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using NAudio.Wave;
-using BeatSaberMarkupLanguage;
-using BeatSaberMarkupLanguage.MenuButtons;
+
 using AudioSplitter.UI;
 using AudioSplitter.Configuration;
 
@@ -19,7 +18,7 @@ namespace AudioSplitter
     internal class AudioSplitterController : MonoBehaviour
     {
         public static AudioSplitterController Instance { get; private set; }
-        private ModMainFlowCoordinator mainFlowCoordinator;
+        internal ModMainFlowCoordinator mainFlowCoordinator;
         public AsioOut asioOut = null;
         public BufferedWaveProvider asioBuffer = null;
 
@@ -37,8 +36,6 @@ namespace AudioSplitter
             Instance = this;
             Plugin.Log?.Debug($"{name}: Awake()");
 
-            MenuButton menuButton = new MenuButton("Audio Splitter", "Mod to send audio to another device", ShowModFlowCoordinator, true);
-            MenuButtons.instance.RegisterButton(menuButton);
         }
 
         public void Start()
@@ -106,15 +103,6 @@ namespace AudioSplitter
                     Plugin.Log?.Warn($"Not Open ASIO, {ex.Message}");
                 }
             }
-        }
-
-        public void ShowModFlowCoordinator()
-        {
-            if (this.mainFlowCoordinator == null)
-                this.mainFlowCoordinator = BeatSaberUI.CreateFlowCoordinator<ModMainFlowCoordinator>();
-            if (mainFlowCoordinator.IsBusy) return;
-
-            BeatSaberUI.MainFlowCoordinator.PresentFlowCoordinator(mainFlowCoordinator);
         }
     }
 }
